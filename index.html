@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .timer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 100px;
+      text-shadow: 0 0 5px black;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer" id="timer"></div>
+  <script>
+    const encrypted = 'MTc4OTczNzM2MDAwMA==';
+    const endTime = parseInt(atob(encrypted));
+    const el = document.getElementById('timer');
+    function update() {
+      const now = Date.now();
+      const d = endTime - now;
+      if (d <= 0) {
+        el.textContent = '00:00:00:00';
+        clearInterval(i);
+        return;
+      }
+      const a = Math.floor(d / 864e5).toString().padStart(2, '0');
+      const h = Math.floor(d / 36e5 % 24).toString().padStart(2, '0');
+      const m = Math.floor(d / 6e4 % 60).toString().padStart(2, '0');
+      const s = Math.floor(d / 1e3 % 60).toString().padStart(2, '0');
+      el.textContent = `${a}:${h}:${m}:${s}`;
+    }
+    const i = setInterval(update, 1000);
+    update();
+  </script>
+</body>
+</html>
